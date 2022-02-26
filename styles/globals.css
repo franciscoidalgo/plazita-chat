@@ -14,3 +14,12 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.noScrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.noScrollbar::-webkit-scrollbar {
+  display: none;
+}
