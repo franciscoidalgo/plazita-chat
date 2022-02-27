@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ChakraProvider theme={myTheme}>
-      <SocketProvider socketApiServer="http://localhost:5000">
+      <SocketProvider socketApiServer="https://plazita-chat.herokuapp.com/">
         <AppProvider>
           <Component {...pageProps} />
         </AppProvider>
