@@ -14,7 +14,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Login } from '../components/authentication/Login';
 import { Signup } from '../components/authentication/Signup';
-import { LoadingSpinner } from '../components/misc/LoadingSpinner';
 
 const LoginPage: NextPage = () => {
   const router = useRouter();
