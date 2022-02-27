@@ -10,12 +10,11 @@ import {
 } from '@chakra-ui/react';
 import axios, { AxiosError } from 'axios';
 import React, { SetStateAction, useEffect, useState } from 'react';
-import { User } from '../models/User';
 import { MdAddCircleOutline } from 'react-icons/md';
 import { ChatLoading } from './ChatLoading';
-import { useAppProvider } from '../context/AppContext';
-import { getSender } from '../models/Chat';
-import { ProfileModal } from './misc/ProfileModal';
+import { useAppProvider } from '../../context/AppContext';
+import { getSender } from '../../models/Chat';
+import { ProfileModal } from '../misc/ProfileModal';
 
 interface Props {
   fetchAgain: boolean;
@@ -40,10 +39,10 @@ export const MyChats: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
       const { data } = await axios.get('/api/chat/all', config);
       setChats(data);
     } catch (err) {
-      const error = err as AxiosError;
+      const error = err as Error;
       toast({
         title: 'An error has occurred',
-        description: error.message,
+        description: 'Failed to load the chats',
         status: 'error',
         isClosable: true,
       });
@@ -74,14 +73,14 @@ export const MyChats: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
         justifyContent="space-between"
         alignContent="center"
       >
-        My Chats
-        <Button
+        Chats
+        {/* <Button
           display="flex"
           fontSize={{ base: '17px', md: '10px', lg: '17px' }}
           rightIcon={<Icon as={MdAddCircleOutline} />}
         >
           New Group Chat
-        </Button>
+        </Button> */}
       </Box>
       <Box
         display="flex"
@@ -91,7 +90,8 @@ export const MyChats: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
         w="100%"
         h="100%"
         borderRadius="lg"
-        overflowY="hidden"
+        overflowY="scroll"
+        className="noScrollbar"
       >
         {chats ? (
           <Stack h="100%" overflowY="scroll" className="noScrollbar">
@@ -131,7 +131,7 @@ export const MyChats: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
             ))}
           </Stack>
         ) : (
-          <ChatLoading />
+          <ChatLoading h="8vh" />
         )}
       </Box>
     </Box>

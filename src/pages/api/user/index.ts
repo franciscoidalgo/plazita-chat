@@ -23,6 +23,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   } else {
     res.status(404).end();
   }
+  return res;
 }
 
 export default withProtect(handler);

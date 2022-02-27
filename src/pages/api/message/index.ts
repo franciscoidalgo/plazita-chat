@@ -39,12 +39,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         select: 'name picture email',
       });
 
-      //   message = await message.populate('sender', 'name picture').execPopulate();
-      //   message = await message.populate('chat').execPopulate();
-      //   message = await UserModel.populate(message, {
-      // path: 'chat.users',
-      // select: 'name picture email',
-      //   });
       await ChatModel.findByIdAndUpdate(chatId, { latestMessage: message });
       res.json(message);
     } catch (error) {
@@ -53,6 +47,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   } else {
     res.status(404).end();
   }
+  return res;
 }
 
 export default withProtect(handler);

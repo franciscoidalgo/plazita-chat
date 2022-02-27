@@ -11,17 +11,18 @@ import {
 } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Login } from '../components/authentication/Login';
 import { Signup } from '../components/authentication/Signup';
+import { LoadingSpinner } from '../components/misc/LoadingSpinner';
 
 const LoginPage: NextPage = () => {
+  const router = useRouter();
+
   useEffect(() => {
     const userInfoJSON = localStorage.getItem('userInfo');
     if (userInfoJSON) router.push('/chats');
-  }, []);
-
-  const router = useRouter();
+  }, [router]);
 
   return (
     <Container maxW="xl" centerContent>

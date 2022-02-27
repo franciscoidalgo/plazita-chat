@@ -29,7 +29,6 @@ const withProtect = (handler) => {
         res.status(401).json({
           success: false,
           message: 'Not authorized, token failed',
-          description: err.message,
         });
       }
     }

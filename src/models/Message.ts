@@ -1,11 +1,13 @@
 import { Schema, model, models } from 'mongoose';
 import { Chat } from './Chat';
+import { User } from './User';
 
 export interface Message {
   _id: string;
-  sender: string;
+  sender: User;
   content: string;
   chat: Chat;
+  createdAt: string;
 }
 
 const messageSchema = new Schema(

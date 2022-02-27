@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 import { Box } from '@chakra-ui/react';
 import React, { SetStateAction } from 'react';
-import { useAppProvider } from '../context/AppContext';
+import { useAppProvider } from '../../context/AppContext';
 import { SingleChat } from './SingleChat';
 
 interface Props {

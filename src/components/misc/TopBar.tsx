@@ -26,9 +26,10 @@ import { useState } from 'react';
 import { FaArrowDown, FaBell, FaSearch } from 'react-icons/fa';
 import { useAppProvider } from '../../context/AppContext';
 import { User } from '../../models/User';
-import { ChatLoading } from '../ChatLoading';
+import { ChatLoading } from '../chat/ChatLoading';
 import { UserListItem } from '../UserAvatar/UserListItem';
 import { ProfileModal } from './ProfileModal';
+import { GiTreehouse } from 'react-icons/gi';
 
 export const TopBar: React.FC = () => {
   const [search, setSearch] = useState('');
@@ -132,13 +133,15 @@ export const TopBar: React.FC = () => {
             Search User
           </Text>
         </Button>
-        <Text fontSize="2xl">Plazita Chat</Text>
+        <Text fontSize="2xl">
+          <Icon as={GiTreehouse} /> Plazita Chat
+        </Text>
         <Box>
-          <Menu>
+          {/* <Menu>
             <MenuButton p={1} verticalAlign="middle">
               <Icon as={FaBell} fontSize="2xl" m={1} />
             </MenuButton>
-          </Menu>
+          </Menu> */}
           <Menu>
             <MenuButton as={Button} rightIcon={<Icon as={FaArrowDown} />}>
               <Avatar
@@ -162,7 +165,7 @@ export const TopBar: React.FC = () => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">Search users</DrawerHeader>
-          <DrawerBody>
+          <DrawerBody className="noScrollbar">
             <Box display="flex" mb={4}>
               <Input
                 placeholder="Search by name or email"
@@ -173,7 +176,7 @@ export const TopBar: React.FC = () => {
               <Button onClick={handleSearch}>Go</Button>
             </Box>
             {loading ? (
-              <ChatLoading />
+              <ChatLoading h="6vh" />
             ) : (
               searchResult?.map((user) => (
                 <UserListItem

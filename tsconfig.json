@@ -21,7 +21,14 @@
     "**/*.tsx",
     "src/lib/dotenvConfig.js",
     "src/lib/generateToken.js",
-    "src/middleware/withProtect.js"
+    "src/middleware/withProtect.js",
+    "src/pages/api/socketio.js",
+    "src/socket-server.js",
+    "src/lib/SocketConnection.js",
+    "src/lib/SocketConnection.js",
+    "src/server.js",
+    "src/firebase/clientApp.js",
+    "src/firebase/nodeApp.js"
   ],
   "exclude": ["node_modules"]
 }

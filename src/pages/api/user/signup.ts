@@ -43,6 +43,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   } else {
     res.status(404);
   }
+  return res;
 }
 
 export default handler;

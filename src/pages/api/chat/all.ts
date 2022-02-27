@@ -20,7 +20,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             select: 'name pic email',
           });
 
-          res.status(200).send(result);
+          return res.status(200).send(result);
         });
     } catch (error) {
       const err = error as Error;
@@ -30,8 +30,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       });
     }
   } else {
-    res.status(404).end();
+    res.status(404);
   }
+  return res;
 }
 
 export default withProtect(handler);

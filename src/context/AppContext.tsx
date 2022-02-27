@@ -23,17 +23,17 @@ export const AppProvider: React.FC = ({ children }) => {
   const [selectedChat, setSelectedChat] = useState<Chat>();
   const [chats, setChats] = useState<Chat[]>();
 
-  const router = useRouter();
+  // const router = useRouter();
 
-  useEffect(() => {
-    const userInfoJSON = localStorage.getItem('userInfo');
-    if (userInfoJSON) {
-      const userInfo: User = JSON.parse(userInfoJSON);
-      setUser(userInfo);
-    } else {
-      router.push('/');
-    }
-  }, []);
+  // useEffect(() => {
+  //   const userInfoJSON = localStorage.getItem('userInfo');
+  //   if (userInfoJSON) {
+  //     const userInfo: User = JSON.parse(userInfoJSON);
+  //     setUser(userInfo);
+  //   } else {
+  //     router.push('/');
+  //   }
+  // }, []);
 
   return (
     <AppContext.Provider
