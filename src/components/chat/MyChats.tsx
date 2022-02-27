@@ -58,6 +58,7 @@ export const MyChats: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
   }, [fetchAgain]);
 
   useEffect(() => {
+    fetchChats();
     socket?.on('message received', (newMessageReceived: Message) => {
       if (!chats?.map((m) => m._id).includes(newMessageReceived.chat._id)) {
         fetchChats();
@@ -67,7 +68,7 @@ export const MyChats: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
     return () => {
       socket?.off('message received');
     };
-  }, []);
+  }, [socket]);
 
   return (
     <Box
