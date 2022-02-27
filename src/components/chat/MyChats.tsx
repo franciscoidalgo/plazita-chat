@@ -15,6 +15,8 @@ import { ChatLoading } from './ChatLoading';
 import { useAppProvider } from '../../context/AppContext';
 import { getSender } from '../../models/Chat';
 import { ProfileModal } from '../misc/ProfileModal';
+import { useSocketProvider } from '../../context/SocketContext';
+import { Message } from '../../models/Message';
 
 interface Props {
   fetchAgain: boolean;
@@ -25,6 +27,8 @@ export const MyChats: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
   // const [loggedUser, setLoggedUser] = useState<User>();
   const { user, selectedChat, setSelectedChat, chats, setChats } =
     useAppProvider();
+
+  const socket = useSocketProvider();
 
   const toast = useToast();
 
@@ -52,6 +56,18 @@ export const MyChats: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
   useEffect(() => {
     fetchChats();
   }, [fetchAgain]);
+
+  useEffect(() => {
+    socket?.on('message received', (newMessageReceived: Message) => {
+      if (!chats?.map((m) => m._id).includes(newMessageReceived.chat._id)) {
+        fetchChats();
+      }
+    });
+
+    return () => {
+      socket?.off('message received');
+    };
+  }, []);
 
   return (
     <Box
