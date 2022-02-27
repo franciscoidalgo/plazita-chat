@@ -19,7 +19,7 @@ const server = app.listen(
 
 const io = new Server(server, {
   cors: {
-    origin: 'https://plazita-chat.vercel.app/',
+    origin: 'https://plazita-chat.vercel.app',
   },
 });
 
