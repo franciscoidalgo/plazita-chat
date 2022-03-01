@@ -13,6 +13,7 @@ import {
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useAppProvider } from '../../context/AppContext';
 import { FaArrowLeft } from 'react-icons/fa';
+import { AiOutlineSend } from 'react-icons/ai';
 import { getSender } from '../../models/Chat';
 import { ProfileModal } from '../misc/ProfileModal';
 import { MdClose } from 'react-icons/md';
@@ -45,8 +46,12 @@ export const SingleChat: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
     setNewMessage(m);
   };
 
-  const sendMessage = async (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && newMessage) {
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') sendMessage();
+  };
+
+  const sendMessage = async () => {
+    if (newMessage) {
       try {
         const messageToSend = `${newMessage}`;
         setNewMessage('');
@@ -207,13 +212,22 @@ export const SingleChat: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
                 <ScrollableChat messages={messages} />
               </Box>
             )}
-            <FormControl onKeyDown={sendMessage} mt={3} isRequired>
-              <Input
-                variant="filled"
-                placeholder="Message"
-                value={newMessage}
-                onChange={(e) => handleMessage(e.target.value)}
-              />
+            <FormControl onKeyDown={handleKeyPress} mt={3} isRequired>
+              <Box display="flex">
+                <Input
+                  variant="filled"
+                  placeholder="Message"
+                  value={newMessage}
+                  onChange={(e) => handleMessage(e.target.value)}
+                  mr={2}
+                />
+                <IconButton
+                  aria-label="Send"
+                  icon={<Icon as={AiOutlineSend} />}
+                  borderRadius="full"
+                  onClick={() => sendMessage()}
+                />
+              </Box>
             </FormControl>
           </Box>
         </Box>
