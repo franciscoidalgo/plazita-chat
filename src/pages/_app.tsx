@@ -3,11 +3,13 @@ import '../../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { AppProvider } from '../context/AppContext';
-import '@fontsource/roboto';
+import '@fontsource/roboto/400.css';
 import NProgress from 'nprogress';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { SocketProvider } from '../context/SocketContext';
+
+let ENV = 'WEB';
 
 const myTheme = extendTheme({
   fonts: {
@@ -35,7 +37,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ChakraProvider theme={myTheme}>
-      <SocketProvider socketApiServer="https://plazita-chat.herokuapp.com/">
+      <SocketProvider
+        socketApiServer={
+          ENV === 'LOCAL'
+            ? 'http://localhost:5000/'
+            : 'https://plazita-chat.herokuapp.com/'
+        }
+      >
         <AppProvider>
           <Component {...pageProps} />
         </AppProvider>

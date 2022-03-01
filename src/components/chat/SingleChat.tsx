@@ -120,7 +120,7 @@ export const SingleChat: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
           `Comparing ${selectedChat?._id} with ${newMessageReceived.chat._id}`
         );
 
-        if (selectedChat?._id !== newMessageReceived.chat._id) {
+        if (selectedChat && selectedChat._id !== newMessageReceived.chat._id) {
           // Notif
         } else {
           setMessages([...messages, newMessageReceived]);

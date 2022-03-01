@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Login } from '../components/authentication/Login';
 import { Signup } from '../components/authentication/Signup';
 
@@ -24,37 +24,49 @@ const LoginPage: NextPage = () => {
   }, [router]);
 
   return (
-    <Container maxW="xl" centerContent>
-      <Box
-        display="flex"
-        justifyContent="center"
-        p="3px"
-        bg="teal"
-        w="100%"
-        m="40px 0 15px 0"
-        borderRadius="lg"
-        borderWidth="1px"
-      >
-        <Heading>Plazita-Chat</Heading>
-      </Box>
-      <Box bg="teal" w="100%" p="4px" borderRadius="lg" borderWidth="1px">
-        <Tabs isFitted>
-          <TabList mb="1em">
-            <Tab>Login</Tab>
-            <Tab>Sign Up</Tab>
-          </TabList>
+    <>
+      <Container maxW="xl" centerContent>
+        <Box
+          display="flex"
+          justifyContent="center"
+          p="3px"
+          bg="teal"
+          w="100%"
+          m="40px 0 10px 0"
+          borderRadius="lg"
+          borderWidth="1px"
+        >
+          <Heading>Plazita Chat</Heading>
+        </Box>
+        <p
+          style={{
+            alignSelf: 'flex-end',
+            fontFamily: 'Roboto',
+            fontStyle: 'italic',
+            fontSize: '15px',
+          }}
+        >
+          All my homies spell it with Z
+        </p>
+        <Box bg="teal" w="100%" p="4px" borderRadius="lg" borderWidth="1px">
+          <Tabs isFitted>
+            <TabList mb="1em">
+              <Tab>Login</Tab>
+              <Tab>Sign Up</Tab>
+            </TabList>
 
-          <TabPanels>
-            <TabPanel>
-              <Login />
-            </TabPanel>
-            <TabPanel>
-              <Signup />
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-      </Box>
-    </Container>
+            <TabPanels>
+              <TabPanel>
+                <Login />
+              </TabPanel>
+              <TabPanel>
+                <Signup />
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </Box>
+      </Container>
+    </>
   );
 };
 

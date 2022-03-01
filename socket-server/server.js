@@ -7,6 +7,7 @@ const { on } = require('events');
 dotenv.config();
 
 const PORT = process.env.PORT;
+const ENV = process.env.ENV ?? 'WEB';
 
 app.get('/', (req, res) => {
   res.send('Socket.io server is running');
@@ -19,7 +20,10 @@ const server = app.listen(
 
 const io = new Server(server, {
   cors: {
-    origin: 'https://plazita-chat.vercel.app',
+    origin:
+      ENV === 'LOCAL'
+        ? 'http://localhost:3000'
+        : 'https://plazita-chat.vercel.app',
   },
 });
 

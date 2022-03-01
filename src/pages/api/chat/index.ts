@@ -9,7 +9,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const user: User = JSON.parse(req.cookies.user);
 
   if (!userId) {
-    return res.status(400).end();
+    return res.status(400).json({
+      success: 'false',
+    });
   }
 
   MongoConnection.connectDb();
@@ -52,7 +54,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       });
     }
   }
-  return res;
 }
 
 export default withProtect(handler);
