@@ -25,8 +25,15 @@ interface Props {
 
 export const MyChats: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
   // const [loggedUser, setLoggedUser] = useState<User>();
-  const { user, selectedChat, setSelectedChat, chats, setChats } =
-    useAppProvider();
+  const {
+    user,
+    selectedChat,
+    setSelectedChat,
+    chats,
+    setChats,
+    notifications,
+    setNotifications,
+  } = useAppProvider();
 
   const socket = useSocketProvider();
 
@@ -63,6 +70,11 @@ export const MyChats: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
       if (!chats?.map((m) => m._id).includes(newMessageReceived.chat._id)) {
         fetchChats();
       }
+
+      if (!notifications.includes(newMessageReceived)) {
+        setNotifications([newMessageReceived, ...notifications]);
+        setFetchAgain(!fetchAgain);
+      }
     });
 
     return () => {
@@ -90,7 +102,7 @@ export const MyChats: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
         justifyContent="space-between"
         alignContent="center"
       >
-        Chats
+        <Text>Chats</Text>
         {/* <Button
           display="flex"
           fontSize={{ base: '17px', md: '10px', lg: '17px' }}

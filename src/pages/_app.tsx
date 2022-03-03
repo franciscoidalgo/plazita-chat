@@ -8,18 +8,9 @@ import NProgress from 'nprogress';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { SocketProvider } from '../context/SocketContext';
+import customTheme from '../theme/theme';
 
-let ENV = 'WEB';
-
-const myTheme = extendTheme({
-  fonts: {
-    heading: 'Roboto, sans-serif',
-    body: 'Roboto, sans-serif',
-  },
-  config: {
-    initialColorMode: 'dark',
-  },
-});
+let ENV = 'LOCAL';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -36,7 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [router]);
 
   return (
-    <ChakraProvider theme={myTheme}>
+    <ChakraProvider theme={customTheme}>
       <SocketProvider
         socketApiServer={
           ENV === 'LOCAL'

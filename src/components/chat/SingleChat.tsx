@@ -8,6 +8,8 @@ import {
   Input,
   Spinner,
   Text,
+  useColorMode,
+  useColorModeValue,
   useToast,
 } from '@chakra-ui/react';
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
@@ -36,9 +38,19 @@ export const SingleChat: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
   const [newMessage, setNewMessage] = useState<string>();
   const [isListening, setIslistening] = useState(false);
 
+  const { colorMode, toggleColorMode } = useColorMode();
+  const chatBg = useColorModeValue('gray.100', 'gray.900');
+  //const inputBg = useColorModeValue('gray.900', 'gray.100');
+
   const socket: Socket | undefined = useSocketProvider();
 
-  const { user, selectedChat, setSelectedChat } = useAppProvider();
+  const {
+    user,
+    selectedChat,
+    setSelectedChat,
+    notifications,
+    setNotifications,
+  } = useAppProvider();
 
   const toast = useToast();
 
@@ -121,12 +133,11 @@ export const SingleChat: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
   useEffect(() => {
     if (!isListening) {
       socket?.on('message received', (newMessageReceived: Message) => {
-        console.log(
-          `Comparing ${selectedChat?._id} with ${newMessageReceived.chat._id}`
-        );
-
         if (selectedChat && selectedChat._id !== newMessageReceived.chat._id) {
-          // Notif
+          if (!notifications.includes(newMessageReceived)) {
+            setNotifications([newMessageReceived, ...notifications]);
+            setFetchAgain(!fetchAgain);
+          }
         } else {
           setMessages([...messages, newMessageReceived]);
         }
@@ -191,7 +202,7 @@ export const SingleChat: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
             w="100%"
             h="100%"
             borderRadius="lg"
-            backgroundColor="gray.900"
+            backgroundColor={chatBg}
             overflowY="hidden"
           >
             {loading ? (
@@ -215,7 +226,8 @@ export const SingleChat: React.FC<Props> = ({ fetchAgain, setFetchAgain }) => {
             <FormControl onKeyDown={handleKeyPress} mt={3} isRequired>
               <Box display="flex">
                 <Input
-                  variant="filled"
+                  variant={colorMode === 'dark' ? 'filled' : 'outline'}
+                  // bg={inputBg}
                   placeholder="Message"
                   value={newMessage}
                   onChange={(e) => handleMessage(e.target.value)}

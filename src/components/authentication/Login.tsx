@@ -4,6 +4,7 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Text,
   useToast,
   VStack,
 } from '@chakra-ui/react';
@@ -110,7 +111,7 @@ export const Login = () => {
         onClick={submitHandler}
         isLoading={loading}
       >
-        Login
+        <Text>Login</Text>
       </Button>
     </VStack>
   );

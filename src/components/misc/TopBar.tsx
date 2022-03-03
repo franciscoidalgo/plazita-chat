@@ -9,6 +9,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Icon,
+  IconButton,
   Input,
   Menu,
   MenuButton,
@@ -17,6 +18,8 @@ import {
   MenuList,
   Spinner,
   Text,
+  useColorMode,
+  useColorModeValue,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
@@ -30,6 +33,8 @@ import { ChatLoading } from '../chat/ChatLoading';
 import { UserListItem } from '../UserAvatar/UserListItem';
 import { ProfileModal } from './ProfileModal';
 import { GiTreehouse } from 'react-icons/gi';
+import { getSender } from '../../models/Chat';
+import { VscColorMode } from 'react-icons/vsc';
 
 export const TopBar: React.FC = () => {
   const [search, setSearch] = useState('');
@@ -38,11 +43,20 @@ export const TopBar: React.FC = () => {
   const [loadingChat, setLoadingChat] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { colorMode, toggleColorMode } = useColorMode();
+  const bg = useColorModeValue('teal.400', 'teal.600');
 
   const toast = useToast();
 
   const router = useRouter();
-  const { user, chats, setChats, setSelectedChat } = useAppProvider();
+  const {
+    user,
+    chats,
+    setChats,
+    setSelectedChat,
+    notifications,
+    setNotifications,
+  } = useAppProvider();
 
   const logoutHandler = () => {
     localStorage.removeItem('userInfo');
@@ -122,7 +136,7 @@ export const TopBar: React.FC = () => {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        bg="teal"
+        bg={bg}
         w="100%"
         py="5px"
         px="10px"
@@ -137,11 +151,25 @@ export const TopBar: React.FC = () => {
           <Icon as={GiTreehouse} /> Plazita Chat
         </Text>
         <Box>
-          {/* <Menu>
+          <Menu>
             <MenuButton p={1} verticalAlign="middle">
-              <Icon as={FaBell} fontSize="2xl" m={1} />
+              <Icon as={FaBell} fontSize="xl" m={1} />
             </MenuButton>
-          </Menu> */}
+            <MenuList p={2}>
+              {!notifications.length && <Text textAlign="center">Empty</Text>}
+              {notifications.map((notification) => (
+                <MenuItem key={notification._id}>
+                  {notification.chat.isGroupChat
+                    ? `New message in ${notification.chat.chatName}`
+                    : `New message from ${
+                        user
+                          ? getSender(user, notification.chat.users).name
+                          : '404'
+                      }`}
+                </MenuItem>
+              ))}
+            </MenuList>
+          </Menu>
           <Menu>
             <MenuButton as={Button} rightIcon={<Icon as={FaArrowDown} />}>
               <Avatar
@@ -155,6 +183,7 @@ export const TopBar: React.FC = () => {
               <ProfileModal user={user}>
                 <MenuItem>My Profile</MenuItem>
               </ProfileModal>
+              <MenuItem onClick={toggleColorMode}>Toggle color mode</MenuItem>
               <MenuDivider />
               <MenuItem onClick={logoutHandler}>Logout</MenuItem>
             </MenuList>

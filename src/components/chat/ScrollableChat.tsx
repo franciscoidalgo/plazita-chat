@@ -38,7 +38,9 @@ export const ScrollableChat: React.FC<Props> = ({ messages }) => {
                 alignItems="center"
                 p={1}
               >
-                <Text key={`${message._id}__mc`}>{message.content}</Text>
+                <Text color="white" key={`${message._id}__mc`}>
+                  {message.content}
+                </Text>
                 <Text
                   key={`${message._id}__md`}
                   color="whiteAlpha.700"
